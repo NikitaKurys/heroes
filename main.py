@@ -2,16 +2,39 @@ from pprint import pprint
 
 import requests
 
-hulk_id = '/332'
-Captain_id = '/149'
-Thanos_id = '/655'
-API_BASE_URL = 'https://superheroapi.com/api/2619421814940190'
+user_input1 = 'Hulk'
+user_input2 = 'Captain America'
+user_input3 = 'Thanos'
 
-response_hulk = requests.get(API_BASE_URL + hulk_id + '/powerstats')
-response_captain = requests.get(API_BASE_URL + Captain_id + '/powerstats')
-response_thanos = requests.get(API_BASE_URL + Thanos_id + '/powerstats')
+hero_id1 = 0
+hero_id2 = 0
+hero_id3 = 0
 
-list_hero = [response_thanos.json(), response_hulk.json(), response_captain.json()]
+API_BASE_URL = 'https://superheroapi.com/api/2619421814940190/'
+
+response_hero1 = requests.get(API_BASE_URL + 'search/' + user_input1)
+response_hero2 = requests.get(API_BASE_URL + 'search/' + user_input2)
+response_hero3 = requests.get(API_BASE_URL + 'search/' + user_input3)
+
+for i in response_hero1.json()['results']:
+    if i['name'] == user_input1:
+         hero_id1 = i['id']
+
+for i in response_hero2.json()['results']:
+    if i['name'] == user_input2:
+        hero_id2 = i['id']
+
+
+for i in response_hero3.json()['results']:
+    if i['name'] == user_input3:
+        hero_id3 = i['id']
+
+
+response_hero1 = requests.get(API_BASE_URL + hero_id1 + "/powerstats")
+response_hero2 = requests.get(API_BASE_URL + hero_id2 + "/powerstats")
+response_hero3 = requests.get(API_BASE_URL + hero_id3 + "/powerstats")
+
+list_hero = [response_hero1.json(), response_hero2.json(), response_hero3.json()]
 max_intelligence = 0
 most_intelligent = 0
 
